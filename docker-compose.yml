@@ -1,0 +1,15 @@
+mongo:
+  image: mongo:latest
+  container_name: mongo
+  restart: always
+  ports:
+    - "27017:27017"
+  command: --smallfiles
+mongo_seed:
+  image: mongo:latest
+  restart: on-failure
+  command: mongo mongo/test /mongo-init.js
+  volumes:
+    - ./mongo-init.js:/mongo-init.js
+  links:
+    - mongo
